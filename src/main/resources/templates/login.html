@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="http://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet" />
+    <script src="http://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+    <!--引入自定义css-->
+    <link rel="stylesheet"  href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+<script>
+    window.onload = function(){
+        // <%--        //1 获取图片对象--%>
+        var img = document.getElementById("img");
+        //2.绑定单机事件--%>
+        img.onclick = function(){
+
+
+            var date = new Date().getTime();   //不让浏览器加载缓存的片--%>
+            //设置img src 属性--%>
+            img.src ="/checkCode?"+date
+        }
+
+    }
+</script>
+
+<script>
+    function reloadImage() {
+        $('#image').attr('src',"/checkCode?"+new Date().getTime());
+    }
+    $(function () {
+        $('#frmLogin').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields:{
+                username: {
+                    validators: {
+                        notEmpty: {
+                            message: "用户名不能为空"
+                        },
+                        stringLength: {  //长度限制
+                            min: 4,
+                            max: 12,
+                            message: '用户名长度必须在6到12位之间'
+                        },
+                        regexp: { //正则表达式
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: '用户名只能包含大写、小写、数字和下划线'
+                        },
+                    }
+                },
+                password:{
+                    validators: {
+                        notEmpty: {
+                            message: "密码不能为空"
+                        },
+                        stringLength: {  //长度限制
+                            min: 4,
+                            max: 12,
+                            message: '密码长度必须在6到12位之间'
+                        },
+                        regexp: { //正则表达式
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: '密码只能包含大写、小写、数字和下划线'
+                        },
+                    }
+                },
+                verifycode:{
+                    validators:{
+                        notEmpty: {
+                            message: "请输入验证码"
+                        }
+                    }
+                }
+
+            }
+        });
+    });
+</script>
+<body style="background-color: #efefef;">
+
+<!--<script>-->
+<!--    alert()-->
+<!--</script>-->
+
+<!--<div class="message" th:unless="${#strings.isEmpty(errormsg)}" th:text="${errormsg}">验证码错误111</div>-->
+<br><br><br>
+<div class="container ">
+    <p style="color: red" th:if="${param.error}"   th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}">1111111</p>
+    <!--panel框--->
+    <div class="panel default-color8  center-block m-box-show" style="width: 500px; height: 400px;border: 1px solid darkgrey;border-radius: 6px">
+        <!--背景蓝-->
+        <div class="panel-heading">
+            <h3>资产管理系统 V1.2</h3>
+            <span>...........</span>
+        </div>
+        <!--panel-body整体样式-->
+        <br>
+        <div class="panel-body center-block">
+            <!-- login form start -->
+            <form action="/toLogin"  class="form-horizontal" method="post" id="frmLogin" style="width:450px">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">用户名：</label>
+                    <div class="col-sm-7">
+                        <input class="form-control" type="text" placeholder="请输入用户名" name="username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                    <div class="col-sm-7">
+                        <input class="form-control" type="password" placeholder="请输入密码" name="password">
+                    </div>
+                </div><br>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-sm-9 padding-left-0">
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-primary btn-block">登&nbsp;&nbsp;陆</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="reset" class="btn btn-primary btn-block">重&nbsp;&nbsp;置</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="@"  class="btn btn-link btn-block">忘记密码？</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-9">
+                </div>
+                <div class="col-sm-3">
+                    记住我：<input type="checkbox" name="remember-me" value="true">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<br><br><br>    <br><br><br>  <br><br><br>
+
+</body>
+</html>

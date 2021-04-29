@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.BrandDao">
+
+
+
+    <select id="findAll" resultType="cn.lczze.ams.entity.Brand">
+        select * from brand
+    </select>
+
+    <select id="findAllOfStatus" resultType="cn.lczze.ams.entity.Brand">
+        select * from brand  where brandStatus = 1
+    </select>
+
+    <!--迷糊查询带状态-->
+    <select id="searchList" parameterType="cn.lczze.ams.entity.Brand"  resultType="cn.lczze.ams.entity.Brand">
+        <bind name="pattern" value="'%' + brandName + '%'" />
+        <bind name="ptn" value="'%' + brandCode + '%'" />
+        <bind name="status" value="'%' + brandStatus + '%'" />
+        select * from amsdb.brand b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="brandCode != null">
+                and b.brandCode like #{ptn}
+            </if>
+            <if test="brandName != null">
+                and b.brandName like #{pattern}
+            </if>
+            <if test="brandStatus != null">
+                and b.brandStatus like #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--模糊 查出全部状态-->
+    <select id="searchNoSta" parameterType="cn.lczze.ams.entity.Brand"  resultType="cn.lczze.ams.entity.Brand">
+        <bind name="pattern" value="'%' + brandName + '%'" />
+        <bind name="ptn" value="'%' + brandCode + '%'" />
+        select * from amsdb.brand b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="brandCode != null">
+                and b.brandCode like #{ptn}
+            </if>
+            <if test="brandName != null">
+                and b.brandName like #{pattern}
+            </if>
+        </where>
+    </select>
+
+    <!--添加-->
+    <insert id="creatBrand">
+        insert into brand(brandCode,brandName) values (#{brandCode},#{brandName});
+    </insert>
+
+    <select id="findById" resultType="cn.lczze.ams.entity.Brand">
+        select * from brand where id = #{id};
+    </select>
+
+    <update id="updateBrandById">
+        update brand set brandName = #{brandName}, brandCode = #{brandCode} where id = #{id};
+    </update>
+
+    <update id="changeStu">
+        update brand set brandStatus = #{Stu}  where id = #{id}
+    </update>
+</mapper>

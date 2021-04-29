@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.SysLogDao">
+
+
+    <insert id="save">
+        insert into syslog(visitTime,username,ip,url,executionTime,method)
+        values(#{visitTime},#{username},#{ip},#{url},#{executionTime},#{method})
+    </insert>
+
+    <select id="findAll" resultType="cn.lczze.ams.entity.SysLog">
+        select * from syslog  order by id desc
+    </select>
+    <select id="findRName" resultType="cn.lczze.ams.entity.Role">
+         select *  from role
+    </select>
+
+
+    <select id="findUName" resultType="cn.lczze.ams.entity.UserInfo">
+        select *  from userinfo where  id = #{id}
+    </select>
+
+    <update id="updateRoleById">
+        update userinfo set roleId = #{roleId} where id = #{id}
+    </update>
+</mapper>

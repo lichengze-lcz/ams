@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.SupplierDao">
+
+    <select id="findAll" resultType="cn.lczze.ams.entity.Supplier">
+        select * from supplier
+    </select>
+
+    <select id="findAllOfStatus" resultType="cn.lczze.ams.entity.Supplier">
+        select * from supplier where supplierStatus = 1
+    </select>
+
+    <!--迷糊查询带状态-->
+    <select id="searchList" parameterType="cn.lczze.ams.entity.Supplier"  resultType="cn.lczze.ams.entity.Supplier">
+        <bind name="pattern" value="'%' + supplierName + '%'" />
+        <bind name="sType" value="'%' + supplierType + '%'" />
+        <bind name="sMan" value="'%' + liaisonMan + '%'" />
+        <bind name="sNum" value="'%' + liaisonNum + '%'" />
+        <bind name="sAddress" value="'%' + address + '%'" />
+        <bind name="sStatus" value="'%' + supplierStatus + '%'" />
+
+
+        select * from amsdb.supplier b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="supplierType != null">
+                and b.supplierType like #{sType}
+            </if>
+            <if test="supplierName != null">
+                and b.supplierName like #{pattern}
+            </if>
+            <if test="liaisonMan != null">
+                and b.liaisonMan like #{sMan}
+            </if>
+            <if test="liaisonNum != null">
+                and b.liaisonNum like #{sNum}
+            </if>
+            <if test="address != null">
+                and b.address like #{sAddress}
+            </if>
+            <if test="supplierStatus != null">
+                and b.supplierStatus like #{sStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--模糊 查出全部状态-->
+    <select id="searchNoSta" parameterType="cn.lczze.ams.entity.Supplier"  resultType="cn.lczze.ams.entity.Supplier">
+        <bind name="pattern" value="'%' + supplierName + '%'" />
+        <bind name="sType" value="'%' + supplierType + '%'" />
+        <bind name="sMan" value="'%' + liaisonMan + '%'" />
+        <bind name="sNum" value="'%' + liaisonNum + '%'" />
+        <bind name="sAddress" value="'%' + address + '%'" />
+
+        select * from amsdb.supplier b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="supplierType != null">
+                and b.supplierType like #{sType}
+            </if>
+            <if test="supplierName != null">
+                and b.supplierName like #{pattern}
+            </if>
+            <if test="liaisonMan != null">
+                and b.liaisonMan like #{sMan}
+            </if>
+            <if test="liaisonNum != null">
+                and b.liaisonNum like #{sNum}
+            </if>
+            <if test="address != null">
+                and b.address like #{sAddress}
+            </if>
+        </where>
+    </select>
+
+    <!--添加类别-->
+    <insert id="creatSupplier">
+        insert into supplier(supplierName,supplierType,liaisonMan,liaisonNum,address)
+        values (#{supplierName},#{supplierType},#{liaisonMan},#{liaisonNum},#{address});
+    </insert>
+
+    <select id="findById" resultType="cn.lczze.ams.entity.Supplier">
+        select * from supplier where id = #{id};
+    </select>
+
+    <update id="updateSupplierById">
+        update supplier set supplierName = #{supplierName}, supplierType = #{supplierType}, liaisonMan = #{liaisonMan},
+        liaisonNum = #{liaisonNum}, address = #{address} where id = #{id};
+    </update>
+
+    <update id="changeStu">
+        update supplier set supplierStatus = #{Stu}  where id = #{id}
+    </update>
+</mapper>

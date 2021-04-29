@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.BadWayDao">
+
+
+
+    <select id="findAll" resultType="cn.lczze.ams.entity.BadWay">
+        select * from badway
+    </select>
+
+    <select id="findAllByStatus" resultType="cn.lczze.ams.entity.BadWay">
+        select * from badway where badWaystatus = 1
+    </select>
+
+    <!--迷糊查询带状态-->
+    <select id="searchList" parameterType="cn.lczze.ams.entity.BadWay"  resultType="cn.lczze.ams.entity.BadWay">
+        <bind name="pattern" value="'%' + badWayName + '%'" />
+        <bind name="ptn" value="'%' + badWayCode + '%'" />
+        <bind name="status" value="'%' + badWayStatus + '%'" />
+        select * from amsdb.badway b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="badWayCode != null">
+                and b.badWayCode like #{ptn}
+            </if>
+            <if test="badWayName != null">
+                and b.badWayName like #{pattern}
+            </if>
+            <if test="badWayStatus != null">
+                and b.badWayStatus like #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--模糊 查出全部状态-->
+    <select id="searchNoSta" parameterType="cn.lczze.ams.entity.BadWay"  resultType="cn.lczze.ams.entity.BadWay">
+        <bind name="pattern" value="'%' + badWayName + '%'" />
+        <bind name="ptn" value="'%' + badWayCode + '%'" />
+        select * from amsdb.badway b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="badWayCode != null">
+                and b.badWayCode like #{ptn}
+            </if>
+            <if test="badWayName != null">
+                and b.badWayName like #{pattern}
+            </if>
+        </where>
+    </select>
+
+    <!--添加类别-->
+    <insert id="creatBadWay">
+        insert into badway(badWayCode,badWayName) values (#{badWayCode},#{badWayName});
+    </insert>
+
+    <select id="findById" resultType="cn.lczze.ams.entity.BadWay">
+        select * from badway where id = #{id};
+    </select>
+
+    <update id="updateBadWayById">
+        update badway set badWayName = #{badWayName}, badWayCode = #{badWayCode} where id = #{id};
+    </update>
+
+    <update id="changeStu">
+        update badway set badWayStatus = #{Stu}  where id = #{id}
+    </update>
+</mapper>

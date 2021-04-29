@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,   initial-scale=1.0,  maximum-scale=1.0, user-scalable=no">
+    <title>资产借还</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<script>
+    $(function () {
+        $('#frmL').bootstrapValidator({
+
+            fields:{
+                bReason: {
+                    validators: {
+                        notEmpty: {
+                            message: "借用原因不能为空"
+                        },
+                        stringLength: {  //长度限制
+                            min: 4,
+                            max: 200,
+                            message: '借用原因必须在2到200位之间'
+                        },
+                    }
+                },
+
+            }
+        });
+    });
+</script>
+<body>
+<!--导航条-->
+<nav th:replace="common/common :: nav" class="navbar" style="margin-bottom: 0px ;border: none;">
+</nav>
+<!--body内容-->
+<div class="container-fluid" style="padding-left: 0px ; height: 92.9%;">
+    <div class="row" style="height: 100%">                                                          <!--缩小左侧栏-->
+        <div th:replace="common/common :: #TrMini">
+        </div>
+
+        <!--中间内容部分-->
+        <div class="col-md-10" id="marginOne">
+            <div class="row">
+                <!--菜单路径-->
+                <div class="breadcrumb col-md-12">
+                    <li><a href="#">  </a></li>
+                    <li><a href="#"> </a></li>
+                    <li class="active"> </li>
+                </div>
+            </div>
+            <!--当前菜单name-->
+            <div class="row">
+                <div class="col-md-9">
+                    <h4>资产借还管理</h4>
+                </div>
+            </div>
+            <h5 class="page-header m-np"></h5><br>
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 style="font-weight: bold;color: teal;" th:text="${isTitle}">新增</h5>
+                </div>
+            </div>
+            <h5 class="page-header m-np"></h5><br>
+            <form action="#" id="frmL" method="post" th:action="@{/addAmsBrList} "
+                  class="form-inline" style="margin-left: auto">
+
+                <div class="row" style="align-items: center">
+                    <div class="col-md-1"></div>
+                    <div class="form-group col-md-5">
+                        <label>资产名称：</label>
+                        <select name="amsName" class="form-control" style="width: 300px">
+                            <option th:each="warehouseVo : ${warehouseVos}"  th:text="${warehouseVo.amsName}">资产名称</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label>资产编码：</label>
+                        <input  class="form-control" disabled value="选择资产后自动填写" >
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="align-items: center">
+                    <div class="col-md-1"></div>
+                    <div class="form-group col-md-5">
+                        <label>借用日期：&nbsp;&nbsp;&nbsp;</label>
+                        <input  class="form-control" disabled value="自动填写当前日期" >
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label>借用部门：&nbsp;  &nbsp;</label>
+                        <select name="departmentId" class="form-control" style="width: 300px">
+                            <option th:each="department : ${departments}" th:value="${department.getId()}" th:text="${department.departmentName}">借用部门</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="align-items: center">
+                    <div class="col-md-1"></div>
+                    <div class="form-group col-md-5">
+                        <label>借用原因：</label>
+                        <input type="text" name="bReason"   class="form-control" placeholder="借用原因" style="width: 350px;height: 60px" required>
+                    </div>
+                    <br><br><br><br><br>
+                    <div class="row m-mar-top m-mar-left-large">
+                        <div class="col-md-5">
+                            <button type="submit" class="btn btn-default">保存</button>
+                            <button class="btn btn-default"><a href="/wareHList"> 关闭</a></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="../static/js/me.js" th:src="@{/js/me.js}"></script>
+</body>
+</html>

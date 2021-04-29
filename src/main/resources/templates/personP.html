@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,   initial-scale=1.0,  maximum-scale=1.0, user-scalable=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"></link>
+    <link href="../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <title>资产管理系统</title>
+</head>
+<!--导航条-->
+<nav th:replace="common/common :: nav" class="navbar" style="margin-bottom: 0px ;border: none;" >
+</nav>
+
+<!--body内容-->
+<div class="container-fluid" style="padding-left: 0px ; height: 92.9%;">
+    <div class="row" style="height: 100%">
+        <!--左侧栏-->
+        <div th:replace="common/common :: #TrMini">
+        </div>
+
+
+        <!--中间内容部分-->
+        <div class="col-md-10" id="marginOne">
+            <div class="row">
+                <!--菜单路径-->
+                <div class="breadcrumb col-md-12">
+                    <li><a href="#">  </a></li>
+                    <li><a href="#"> </a></li>
+                    <li class="active"> </li>
+                </div>
+            </div>
+            <!--当前菜单name-->
+            <div class="row">
+
+                <div class="col-md-1" style="width: 5px;">
+                    <div class="tupian"></div>
+                </div>
+                <div class="col-md-1" style="width:290px">
+
+                    <div class="zhongxin" style="">个人中心</div>
+                </div>
+                <div class="col-md-6"></div>
+                <ul class="nav nav-pills" role="tablist">
+                    <li><a href="/per">个人信息</a></li>
+                    <li  class="active"><a href="/perP">修改密码</a></li>
+                    <li><a href="/perPplus">修改密保 </a></li>
+                </ul>
+
+            </div>
+
+            <hr>
+            <p><i>修改密码</i></p>
+            <hr>
+
+            <div class="row" id="geren">
+
+                <div class="col-md-9" id="biaodan">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputpassword" class="col-md-3 control-label">旧密码：</label>
+                        <div class="col-md-9">
+                            <input type="password" class="form-control" id="inputpassword" placeholder="请输入登录密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputpassword1" class="col-md-3 control-label">新密码：</label>
+                        <div class="col-md-9">
+                            <input type="password" class="form-control" id="inputpassword1" placeholder="password">
+                            <span class="zi">密码填写建议：长度不小于8位，且包含，大写英文字母、小写英文字母、数字和符号。 点击显示密码。</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputpassword2" class="col-md-3 control-label">确认新密码：</label>
+                        <div class="col-md-9">
+                            <input type="password" class="form-control" id="inputpassword2" placeholder="password">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-10">
+                            <button type="button" class="btn btn-primary btn" id="btn1">保存</button>
+                            <button type="button" class="btn btn-default btn" id="btn2">取消</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+
+
+
+</div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="static/js/me.js" th:src="@{/js/me.js}"></script>
+<script>
+    function page(obj) {
+        //拿到page值
+        $("[name='pagenum']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    //点击事件
+    $("#btnAjax").click(function () {
+        loaddata();
+    });
+    // Ajax 提交表单
+    function loaddata() {
+        $("#table-container").load("/aTypeS", {
+            typeCode: $("[name='typeCode']").val(),
+            typeName: $("[name='typeName']").val(),
+            pageNum: $("[name='pagenum']").val(),
+            typeStatus: $("[name='typeStatus']").val(),
+        });
+    }
+
+
+    //点击事件
+    $("#m-typeList").click(function () {
+        loadCommon();
+    });
+    // Ajax 提交表单
+    function loadCommon() {
+        $("#common").load("/TypeList", {
+
+        });
+    }
+
+    //图片点击切换
+    $('#nan').click(function() {
+        console.log("111111")
+        $('#a').attr('src', 'static/img/yuan.png')
+
+    })
+    $('#nv').click(function() {
+        console.log("11111333333331")
+        $('#a').attr('src', 'static/img/yuan2.png')
+
+    })
+
+</script>
+
+</html>

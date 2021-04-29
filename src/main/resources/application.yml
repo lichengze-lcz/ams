@@ -1,0 +1,16 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  servlet:
+    multipart:
+      max-file-size: 10MB    #设置单个文件的最大值
+      max-request-size: 20MB  #设置单次请求的所有文件的最大值
+
+
+#指定环境
+  profiles:
+     active: dev
+
+#mybatis:
+  #configuration:
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,   initial-scale=1.0,  maximum-scale=1.0, user-scalable=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <link href="../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <title>资产管理系统</title>
+</head>
+
+<script>
+    $(function () {
+        $('#frmLogin').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields:{
+                picture: {
+                    validators: {
+                        notEmpty: {
+                            message: "不能为空"
+                        },
+                    }
+                },
+                phoneNum: {
+                    validators: {
+                        notEmpty: {
+                            message: "手机号不能为空"
+                        },
+                        regexp: { //正则表达式
+                            regexp: /^1[3|4|5|6|7|8|9][0-9]{9}$/,
+                            message: '输入合格的手机号'
+                        },
+                    }
+                },
+            }
+        });
+    });
+
+
+    $(function () {
+        $('#frm').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields:{
+
+                phoneNum: {
+                    validators: {
+                        notEmpty: {
+                            message: "手机号不能为空"
+                        },
+                        regexp: { //正则表达式
+                            regexp: /^1[3|4|5|6|7|8|9][0-9]{9}$/,
+                            message: '输入合格的手机号'
+                        },
+                    }
+                },
+                nickName: {
+                    validators: {
+                        notEmpty: {
+                            message: "昵称不能为空"
+                        },
+                        stringLength: {  //长度限制
+                            min: 0,
+                            max: 10,
+                            message: '昵称必须在2到15位之间'
+                        },
+                    }
+                },
+                sign: {
+                    validators: {
+                        notEmpty: {
+                            message: "签名不能为空"
+                        },
+                        stringLength: {  //长度限制
+                            min: 0,
+                            max: 20,
+                            message: '在0到20位之间'
+                        },
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: "邮箱不能为空"
+                        },
+                        emailAddress: {
+                            message: '邮箱地址格式有误'
+                        }
+                    }
+                },
+            }
+        });
+    });
+</script>
+<!--导航条-->
+<nav th:replace="common/common :: nav" class="navbar" style="margin-bottom: 0px ;border: none;">
+</nav>
+<!--body内容-->
+<div class="container-fluid" style="padding-left: 0px ; height: 92.9%;">
+    <div class="row" style="height: 100%">
+        <!--左侧栏-->
+        <div th:replace="common/common :: #TrMini">
+        </div>
+
+        <!--中间内容部分-->
+        <div class="col-md-10" id="marginOne">
+            <div class="row">
+                <!--菜单路径-->
+                <div class="breadcrumb col-md-12">
+                    <li><a href="#">  </a></li>
+                    <li><a href="#"> </a></li>
+                    <li class="active"> </li>
+                </div>
+            </div>
+            <!--当前菜单name-->
+            <div class="row">
+
+                <div class="col-md-1" style="width: 5px;">
+                    <div class="tupian"></div>
+                </div>
+                <div class="col-md-1" style="width:290px">
+
+                    <div class="zhongxin" style="">个人中心</div>
+                </div>
+                <div class="col-md-6"></div>
+                <ul class="nav nav-pills" role="tablist" id="weilei">
+                    <li class="active"><a href="/per">个人信息 </a></li>
+                    <li><a href="/perP">修改密码</a></li>
+                    <li><a href="/perPplus">修改密保 </a></li>
+                </ul>
+
+
+            </div>
+
+            <hr>
+            <!--            <form  method="post" action="/savep">-->
+            <div class="row" id="geren">
+<!--                <div class="col-md-1"></div>-->
+                <div class="col-md-3 user-panel">
+                    <div class="one">
+                        <img
+                             src="http://thirdqq.qlogo.cn/g?b=oidb&k=QWnia0a4cWVr8TeIibLWiaHJQ&s=100&t=1575281247"
+                             th:src="${session.avatar}" alt="头像"/>
+
+                        <div class="two" style="margin-left:  50px" th:text="${session.nickName}">库管员</div>
+                    </div>
+                    <br/><br/><br/><br/>
+
+                    <div class="" data-toggle="modal" data-target="#myModal" >
+                        <div class="" style="margin-left:  45px">
+                            <button type="button" class="btn btn-default"> 修改头像</button>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">上传头像</h4>
+                                </div>
+                                <div class="modal-body" style="align-content: center">                                                          <!--表示提交的数据，以多段的形式进行拼接，然后以二进制流的形式发送 -->
+                                    <form action="/uploadA"  class="form-horizontal"  method="post" id="frmLogin"  enctype="multipart/form-data"  style="width:200px; height: 110px;">
+                                        上传图片个数为1张：<input type="file" class="file"  name="picture"><br>
+                                        <div class="col-md-12 col-xs-3">
+                                            <button type="submit" class="btn btn-primary btn-block">上&nbsp;传</button>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9" id="biaodan">
+                    <form class="form-horizontal" id="frm" action="/upUser" method="post">
+                        <div class="form-group">
+                            <label  class="col-md-5 control-label">用户昵称：</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" name="nickName" th:value="${session.nickName}"  placeholder="用户名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">电子邮箱：</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" th:value="${session.email}" name="email"
+                                       placeholder="请输入邮箱" style="width: 320px" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-md-5 control-label">手机号码：</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" name="phoneNum" th:value="${session.phoneNum}"
+                                       placeholder="phone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">当前角色：</label>
+                            <div class="col-md-7">
+                                <input disabled class="form-control" th:value="${session.userRole}"
+                                       placeholder="private plane">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">个性签名：</label>
+                            <div class="col-md"></div>
+                            <div class="form-group col-md-2">
+                                <input type="text" name="sign" class="form-control" placeholder="个性签名"
+                                       th:value="${session.sign}" style="width: 500px;height: 60px">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-60 col-md-10">
+                                <button type="submit" class="btn btn-primary">保存</button>
+                                <button type="button" class="btn btn-default"><a href="/index">返回首页</a></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="../static/js/me.js" th:src="@{/js/me.js}"></script>
+<script>
+    function page(obj) {
+        //拿到page值
+        $("[name='pagenum']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    //点击事件
+    $("#btnAjax").click(function () {
+        loaddata();
+    });
+
+    // Ajax 提交表单
+    function loaddata() {
+        $("#table-container").load("/aTypeS", {
+            typeCode: $("[name='typeCode']").val(),
+            typeName: $("[name='typeName']").val(),
+            pageNum: $("[name='pagenum']").val(),
+            typeStatus: $("[name='typeStatus']").val(),
+        });
+    }
+
+
+    //点击事件
+    $("#m-typeList").click(function () {
+        loadCommon();
+    });
+
+    // Ajax 提交表单
+    function loadCommon() {
+        $("#common").load("/TypeList", {});
+    }
+
+</script>
+
+</html>

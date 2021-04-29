@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/common :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>资产入库管理</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!--导航条-->
+<nav th:replace="common/common :: nav" class="navbar" style="margin-bottom: 0px ;border: none;" >
+</nav>
+
+<!--body内容-->
+<div class="container-fluid" style="padding-left: 0px ; height: 92.9%;">
+    <div class="row" style="height: 100%">
+        <!--左侧栏-->
+        <div th:replace="common/common :: #TrMini">
+        </div>
+
+        <!--中间内容部分-->
+        <div class="col-md-10 m-ph-left" id="marginOne">
+            <div class="row">
+                <!--菜单路径-->
+                <div class="breadcrumb col-md-12">
+                    <li><a href="#">  </a></li>
+                    <li><a href="#"> </a></li>
+                    <li class="active"> </li>
+                </div>
+            </div>
+            <!--当前菜单name-->
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="">
+                        <h4>资产入库管理</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button id="btnHi" type="button" class="btn btn-default" aria-label="Left Align">
+                        隐藏
+                    </button>
+                    <a href="/addWareH">
+                        <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-align-left" aria-hidden="true">新增</span>
+                        </button>
+                    </a>
+                    <button type="button" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <h5 class="page-header m-np"></h5><br>
+            <!--查询功能-->
+            <div class="row" id="selectHi">
+                <div class="col-md-12">
+                    <!--不能有目录 Ajax； 这里不能是form表单-->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-inline">
+                                <!--模糊查询-->
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <div class="form-group">
+                                            <label>资产编码：</label>
+                                            <input type="text" class="form-control" name="amsCode" value="" placeholder="编码"
+                                                   style="width: 100px">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>资产名称：</label>
+                                            <input type="text" class="form-control" name="amsName" placeholder="名称"
+                                                   style="width: 100px">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>资产类别：</label>
+                                            <input type="text" class="form-control" name="typeName" value="" placeholder="资产类型"
+                                                   style="width: 100px">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>供应商：</label>
+                                            <input type="text" class="form-control" name="supplierName" value="" placeholder="供应商"
+                                                   style="width: 100px">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <div class="form-group">
+                                            <label>品牌：</label>
+                                            <input type="text" class="form-control" name="brandName" value="" placeholder="品牌"
+                                                   style="width: 100px">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>入库日期：</label>
+                                            <input type="Date" class="form-control" name="warehousingDate" value="" placeholder="入库日期"
+                                                   style="width: 100px">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>存放地点：</label>
+                                            <input type="text" class="form-control" name="leaveName" value="" placeholder="存放地址"
+                                                   style="width: 100px">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>状态：</label>
+                                            <select name="amsStatus" class="form-control" style="width: 100px">
+                                                <option value=""></option>
+                                                <option value="1">正常</option>
+                                                <option value="0" class="m-color-red">停用</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <button type="submit" class="col-md-2 btn m-mar-left" id="btnAjax">查询</button>
+                                <button type="reset" class="col-md-2 btn  m-mar-left">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="table-container" th:fragment="wareHList">
+                <!--隐藏域-->
+                <input type="hidden" name="pagenum">
+                <table class="table table-bordered">
+                    <caption></caption>
+                    <tr>
+                        <th></th>
+                        <th>资产编码</th>
+                        <th>资产名称</th>
+                        <th>资产类别</th>
+                        <th>供应商</th>
+                        <th>品牌</th>
+                        <th>入库日期</th>
+                        <th>存放地点</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr th:each="wareHList,iterStat : ${pageInfo.list}">
+                        <td th:text="${iterStat.count}">1</td>
+                        <td th:text="${wareHList.amsCode}">资产编码</td>
+                        <th th:text="${wareHList.amsName}">资产名称</th>
+                        <th th:text="${wareHList.typeName}">资产类别</th>
+                        <th th:text="${wareHList.supplierName}">供应商</th>
+                        <th th:text="${wareHList.brandName}">品牌</th>
+                        <th th:text="${#dates.format(wareHList.warehousingDate,'yyyy-MM-dd')}">入库日期</th>
+                        <th th:text="${wareHList.leaveName}">存放地点</th>
+                        <th>
+                            <span th:text="${wareHList.amsStatus} == '1' ? '在库':''" >正常</span>
+                            <span th:text="${wareHList.amsStatus} == '2' ? '已借出':''">停用</span>
+                            <span th:text="${wareHList.amsStatus} == '3' ? '报废待审批':''">正常</span>
+                            <span th:text="${wareHList.amsStatus} == '4' ? '已报废':''">停用</span>
+                        </th>
+                        <th>
+                            <!--编辑-->
+                            <a  th:href="@{/wareHEdit/{id}(id=${wareHList.id})}" ><i class="fas fa-edit"></i></a>
+                            <!--启用-->
+                            <a th:href="@{/wareHDelete/{id}(id=${wareHList.id})}" onclick="return confirm('您确定要删除该资产信息吗?')"><span style="color: red" class="glyphicon glyphicon-trash " aria-hidden="true"></span></a>
+
+                        </th>
+                    </tr>
+
+                </table> <br><br><br>
+
+                <!--分页-->
+                <nav aria-label="Page navigation" style="position: fixed; bottom: 50px">
+                    <ul class="pagination">
+                        <li>
+                            <a onclick="page(this)" th:attr="data-page=${pageInfo.prePage}"
+                               aria-label="Next" th:unless="${pageInfo.isFirstPage}">上一页</a>
+                        </li>
+                        <!--遍历条数-->
+                        <li th:each="nav:${pageInfo.navigatepageNums}">
+                            <!--遍历出所有页码（不包括当前页码）-->
+                            <a onclick="page(this)" th:attr="data-page=${nav}" th:text="${nav}"
+                               th:if="${nav != pageInfo.pageNum}">1</a>
+                            <!--遍历出当前页-->
+                            <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}"
+                                  th:text="${nav}">2</span>
+                        </li>
+                        <li>
+                            <a onclick="page(this)" th:attr="data-page=${pageInfo.nextPage}" aria-label="Next"
+                               th:unless="${pageInfo.isLastPage}">下一页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="../static/js/me.js" th:src="@{/js/me.js}"></script>
+<script>
+
+    function page(obj) {
+        //拿到page值
+        $("[name='pagenum']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    //点击事件
+    $("#btnAjax").click(function () {
+        loaddata();
+        console.log("点击事件触发")
+    });
+    // Ajax 提交表单
+    function loaddata() {
+        $("#table-container").load("/wareHS", {
+            amsCode: $("[name='amsCode']").val(),
+            amsName: $("[name='amsName']").val(),
+            pageNum: $("[name='pagenum']").val(),
+            amsStatus: $("[name='amsStatus']").val(),
+            typeName: $("[name='typeName']").val(),
+            supplierName: $("[name='supplierName']").val(),
+            brandName: $("[name='brandName']").val(),
+            leaveName: $("[name='leaveName']").val(),
+            // warehousingDate: $("[name='warehousingDate']").val()
+        });
+    }
+</script>
+</body>
+</html>

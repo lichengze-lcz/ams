@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.AWarehousingDao">
+
+    <select id="findAllOfStatus"  resultType="cn.lczze.ams.Vo.WarehouseVo">
+          select w.id, w.amsCode, w.warehousingDate, w.amsName,t.typeName,s.supplierName,b.brandName,l.leaveName,w.amsStatus
+        from aWarehousing w,atype t,supplier s ,brand b,leaveaddress l
+        where w.typeId = t.id and w.supplierId = s.id and w.brandId = b.id and w.leaveId = l.id and amsStatus = 1
+    </select>
+
+
+    <select id="getAHouseList" resultType="cn.lczze.ams.Vo.WarehouseVo">
+        select w.id, w.amsCode, w.warehousingDate, w.amsName,t.typeName,s.supplierName,b.brandName,l.leaveName,w.amsStatus
+        from aWarehousing w,atype t,supplier s ,brand b,leaveaddress l
+        where w.typeId = t.id and w.supplierId = s.id and w.brandId = b.id and w.leaveId = l.id
+    </select>
+
+    <select id="getWName"  resultType="cn.lczze.ams.entity.AWarehousing">
+        select * from aWarehousing w where amsStatus = 1
+    </select>
+
+
+
+    <!--迷糊查询-->
+    <select id="searchList" parameterType="cn.lczze.ams.Vo.WarehouseVo"  resultType="cn.lczze.ams.Vo.WarehouseVo">
+        select w.id, w.amsCode, w.warehousingDate, w.amsName,t.typeName,s.supplierName,b.brandName,l.leaveName,w.amsStatus
+        from aWarehousing w,atype t,supplier s ,brand b,leaveaddress l
+        where w.typeId = t.id and w.supplierId = s.id and w.brandId = b.id and w.leaveId = l.id
+        and w.amsCode like concat("%",#{amsCode},"%") and w.amsName like concat("%",#{amsName},"%") and  t.typeName like concat("%",#{typeName},"%") and s.supplierName like concat("%",#{supplierName},"%")
+        and b.brandName like concat("%",#{brandName},"%") and l.leaveName like concat("%",#{leaveName},"%") and w.amsStatus like concat("%",#{amsStatus},"%")
+    </select>
+
+
+
+    <resultMap id="baseAware" type="cn.lczze.ams.entity.AWarehousing">
+        <id property="id" column="id"></id>
+        <result property="typeId" column="typeId"></result>
+        <result property="supplierId" column="supplierId"></result>
+        <result property="brandId" column="brandId"></result>
+        <result property="leaveId" column="leaveId"></result>
+
+        <association property="typeList" javaType="int"
+                     select="cn.lczze.ams.dao.ATypeDao.findById" column="typeId">
+        </association>
+        <association property="supplierList" javaType="int"
+                     select="cn.lczze.ams.dao.SupplierDao.findById" column="supplierId">
+        </association>
+        <association property="brandList" javaType="int"
+                     select="cn.lczze.ams.dao.BrandDao.findById" column="brandId">
+        </association>
+        <association property="leaveAddressList" javaType="int"
+                     select="cn.lczze.ams.dao.LeaveAddressDao.findById" column="leaveId">
+        </association>
+
+
+    </resultMap>
+
+    <select id="findAllById" resultMap="baseAware">
+        select * from aWarehousing where amsCode = #{amsCode};
+    </select>
+
+
+
+    <delete id="DeleteById">
+        Delete from aWarehousing where id = #{id}
+    </delete>
+
+    <update id="updateWareHById">
+        update aWarehousing set amsName = #{amsName} ,typeId = #{typeId},supplierId = #{supplierId},brandId = #{brandId},leaveId = #{leaveId} where id = #{id}
+
+    </update>
+
+
+
+    <insert id="creatWareH">
+        insert into aWarehousing(amsCode,amsName,typeId,supplierId,brandId,warehousingDate,leaveId)
+                     values (#{amsCode},#{amsName},#{typeId},#{supplierId},#{brandId},#{warehousingDate},#{leaveId});
+    </insert>
+
+
+
+    <select id="findOfList"  resultType="cn.lczze.ams.Vo.WarehouseVo">
+        select * from aWarehousing w
+    </select>
+
+    <!--根据当前id 查找相关表-->
+    <select id="findListById" resultType="cn.lczze.ams.Vo.WarehouseVo" parameterType="long">
+         select * from aWarehousing w,atype t,supplier s ,brand b,leaveaddress l
+        where w.id = #{wid} and w.typeId = t.id and w.supplierId = s.id and w.brandId = b.id and w.leaveId = l.id
+
+    </select>
+
+
+
+    <update id="updateAmsStatus">
+        update aWarehousing set amsStatus = #{status} where id = #{amsId}
+    </update>
+
+    <select id="findCodeByName" resultType="cn.lczze.ams.entity.AWarehousing">
+        select id, amsCode,typeId from aWarehousing where amsName = #{amsName};
+    </select>
+
+</mapper>

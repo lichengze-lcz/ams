@@ -1,0 +1,285 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+
+
+
+
+
+
+.bg-7gy{
+    display:inline-block;width:100%;background:linear-gradient(to left bottom,#b2f7ff 0,#b2d1ff 100%);cursor:pointer
+}
+
+.gird-header {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    /*min-height: 50px;*/
+    background-color:#7461AA;
+    color: white;
+    font-size: 15px;
+}
+.m-box-show{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5) !important;
+}
+
+.user-panel > .image > img {
+    width: 100%;
+    /*width: 60px;*/
+    height: 50px;
+    /*width: 60px;*/
+    /*height: 100%;*/
+    /*border-radius: 50%;*/
+
+    overflow: hidden;
+}
+.user-panel >.one > img {
+    /*width: 100%;*/
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+
+}
+
+/*.img-circle {*/
+/*   */
+
+/*}*/
+
+img {
+    /*vertical-align: middle;*/
+}
+img {
+    border: 0;
+    margin-left: 10px;
+}
+
+.im{
+    /*width: 100%;*/
+    width: 10px;
+    height: auto;
+}
+.m-float{
+    float: left;
+}
+
+.font-style{
+    z-index: 1;
+    font-weight: bold;!important;
+    color: white;!important;
+}
+
+.margin-left-min{
+    padding-left: 50px;
+}
+.m-mar-left{
+    margin-left: 10px;
+}
+.m-mar-left-large{
+    margin-left: 400px;
+}
+.m-mar-top{
+    margin-top: 50px;
+}
+
+.m-padding-mini{
+    padding: 4% 20%;
+}
+.m-padding-size{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.m-padding-large{
+    padding: 20px 20px;
+}
+.m-np{
+    padding: 0px 0px;
+    margin: 0px 0px;
+}
+
+.m-width-large{
+    width: 200px;
+}
+.m-width-big{
+    z-index: 1;
+    width: 300px;!important;
+}
+.m-heigh-mini{
+    height: 40px;!important;
+}
+
+.bg-color{
+    background-color:teal;
+}
+.bg-color-de{
+    background-color: #222d32;
+}
+
+.m-border-no{
+
+    border-style:unset;!important;
+    border-radius: 1px;!important;
+}
+
+/*.active{*/
+/*    background-color: whitesmoke;*/
+
+/*}*/
+
+div ul li ul li a:hover{
+    color: black;
+    font-weight: bold;
+    /*font-family: inherit;*/
+
+    /*transition: 3s ;*/
+    text-decoration: none;
+}
+
+table tr th a i:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+
+}
+
+.m-font-color{
+    color: #cccccc
+
+}
+.m-color-red{
+    color: red;
+}
+.m-color-teal{
+    font-weight: bold;
+    color: teal;
+    !important;
+}
+.m-color-wh{
+    color: whitesmoke;
+}
+
+.message{
+    color: #cd0102;
+    font-weight: bold;
+    text-align: center;
+    font-size: large;
+    margin-top: 50px;
+}
+
+.m-input-mini{
+    z-index: 1;
+    width: 100px;!important;
+}
+
+/*手机响应*/
+@media screen and (max-width: 768px) {
+    .m-mobile-hide {
+        display: none !important;
+    }
+
+    /*鎵嬫満绔殣钘�*/
+    .m-mobile-show {
+        display: block !important;
+    }
+
+    .m-ph-left{
+        margin-left: 6%;
+    }
+
+}
+
+.m-mobile-h {
+    display: none !important;
+    transition: 3s;
+}
+.m-marginOne{
+    margin-left: 6%;
+    transition: 1s;
+}
+
+
+
+.m-block{
+    display: block;!important;
+}
+
+
+/*个人中心*/
+.box{
+    margin:0px;
+    padding:0px;
+}
+
+.tupian{
+    background: url(../img/01.png) ;
+    background-repeat:no-repeat ;
+    background-size:65% ;
+    width:30px;
+    height:30px;
+    /*div转变为行内块元素*/
+    display:inline-block;
+    /*margin:8%;*/
+}
+
+.zhongxin{
+    display:inline-block;
+    margin: 0px 0px;
+}
+/*头像部分*/
+.one{
+    /*background-image:url(../img/yuan.png);*/
+    background-repeat: no-repeat;
+
+    width:120px;
+    height:120px;
+}
+.two{
+    font-size:23px;
+    /*margin:0 12px;*/
+}
+.three{
+    margin:0 25px;
+}
+.btn3{
+    width:260px;
+    margin:20px -50px;
+    background-color: pink;
+}
+#geren{
+    margin: 50px;
+}
+
+
+/*修改密码*/
+.zi{
+    font-size:13px;
+    color: orange;
+}
+p i{
+    color: dodgerblue;
+}
+
+.check{
+    color: red;
+    background-color:teal;
+    font-size: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

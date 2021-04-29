@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.AmsBrDao">
+
+    <resultMap id="baseFindAll" type="cn.lczze.ams.entity.Amsbr">
+
+        <id property="id" column="id"></id>
+        <result property="departmentId" column="departmentId"></result>
+        <result property="typeId" column="typeId"></result>
+        <association property="typeList" javaType="int"
+                     select="cn.lczze.ams.dao.ATypeDao.findById" column="typeId">
+        </association>
+        <association property="deptList" javaType="int"
+                     select="cn.lczze.ams.dao.DepartmentDao.findById" column="departmentId">
+        </association>
+    </resultMap>
+
+
+    <select id="findAll" resultMap="baseFindAll">
+        select * from amsbr  order by rDate desc
+
+    </select>
+
+
+
+    <insert id="CreateAmsBr">
+        insert into  amsbr(bNum,amsCode,amsName,typeId,departmentId,bReason,bDate) values (#{bNum},#{amsCode},#{amsName},#{typeId},#{departmentId},#{bReason},#{bDate})
+    </insert>
+
+    <update id="createRDesc">
+        update amsbr set rDate = #{date},returnDesc = #{rDesc} where id = #{id}
+    </update>
+
+    <update id="updateAmsBrStatus">
+        update amsbr set brStatus = #{status} where id = #{amsId}
+    </update>
+
+
+    <select id="findAllById"  resultMap="baseFindAll">
+        select * from amsbr where id = #{id}
+    </select>
+
+
+    <select id="findBySearch" resultMap="baseFindAll">
+        select *
+        from amsbr b,atype t,department d
+        where b.typeId = t.id and b.departmentId = d.id
+        and t.typeName like concat("%",#{typeName},"%") and d.departmentName like concat("%",#{departmentName},"%")
+        and b.amsCode like concat("%",#{amsCode},"%") and b.amsName like concat("%",#{amsName},"%") order by rDate desc
+    </select>
+
+
+
+
+</mapper>

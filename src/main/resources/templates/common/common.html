@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+
+<head th:fragment="head(title)">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,   initial-scale=1.0,  maximum-scale=1.0, user-scalable=no">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <title th:replace="${title}">公共片段</title>
+</head>
+<body>
+<!--导航条-->
+<nav class="navbar" style="margin-bottom: 0px ;border: none">
+    <div class="container-fluid gird-header ">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a id="TrDouble"  class="navbar-brand font-style margin-left-min" href="#">资产管理系统</a>
+            <a class="navbar-brand" href="#"> &nbsp;<span id="menuHide" class="glyphicon glyphicon-align-justify m-color-wh" aria-hidden="true"></span></a>
+
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a  href="#" class="font-style"><i class="fas fa-bell"></i>&nbsp;通知</a></li>
+                <li class="dropdown ">
+
+                    <a  href="#" class="dropdown-toggle font-style" data-toggle="dropdown" role="button"
+                        aria-haspopup="true" aria-expanded="false">
+                        <span sec:authorize="hasRole('user')">库管员</span>
+                        <span sec:authorize="hasRole('admin')">审批领导</span>
+                        <span sec:authorize="hasRole('adminplus')">系统管理员</span>
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/per">个人中心</a></li>
+                        <li><a href="/perP">修改密码</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/logout">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--body内容-->
+<div class="container-fluid" style="padding-left: 0px">
+    <div class="row" >                                                          <!--缩小左侧栏-->
+        <div class="col-md-2  m-mobile-hide" style="height: 100%; width: 240px" id="TrMini">
+            <!--库管员在线情况-->
+            <div class="user-panel row">
+                <div class="image col-md-4">
+                    <img  th:src="${session.avatar}"  class="img-circle"
+                          alt="加载失败">
+                </div>
+                <div class=" col-md-5" style="color: #7461AA;padding: 0px">
+                    <p th:text="${session.nickName}">库管员</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                    <a href="/logout"><i class="fa fa-sign-in-alt m-color-red"></i> 注销</a>
+                </div>
+            </div>
+
+            <!-- 侧边栏标签页 -->          <!--点击菜单隐藏-->
+            <ul class="nav nav-stacked" id="menu">
+                <!-- 侧边栏选项 -->
+                <li role="presentation" class="" style="width: 220px;" >
+                    <!-- 选项控制data-target对应的显隐 -->
+                    <a href="#" data-toggle="collapse" sec:authorize="hasRole('user')" data-target="#list"><i class="fa fa-id-card-alt "></i>&nbsp;资产管理系统</a>
+                    <!-- 隐藏的详细菜单 -->
+                    <ul id="list" sec:authorize="hasRole('user')" class="collapse in">
+                        <li class=" m-padding-mini"><a class="m-font-color" href="/aTypeList"><i class="fa fa-hotel"></i>&nbsp;资产类别管理</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/brandList"><i class="fa fa-magic"></i>&nbsp;品牌管理</a>
+                        </li>
+                        <li class="m-padding-mini "><a class="m-font-color" href="/badWayList"><i class="fa fa-mail-bulk"></i>&nbsp;报废方式管理</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/departmentList"><i class="fa fa-memory"></i>&nbsp;部门管理</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/supplierList"><i class="fa fa-piggy-bank"></i>&nbsp;供应商管理</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/leaveList"><i class="fa fa-portrait"></i>&nbsp;存放地点管理</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/wareHList"><i class="fa fa-people-carry"></i>&nbsp;资产入库</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/aBrList"><i
+                                class="fa fa-money-check-alt"></i>&nbsp;资产借还</a></li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/aBuyList"><i class="fa fa-paste"></i>&nbsp;资产申购</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/aBadList"><i class="fa fa-person-booth"></i>&nbsp;资产报废</a>
+                        </li>
+                    </ul>
+                    <a href="#" data-toggle="collapse" sec:authorize="hasRole('admin')" data-target="#Adminlist"><i class="fa fa-id-card-alt "></i>&nbsp;资产管理审批</a>
+                    <ul id="Adminlist" class="collapse in" sec:authorize="hasRole('admin')">
+                        <li class=" m-padding-mini"><a class="m-font-color" href="/aBuyList"><i class="fa fa-hotel"></i>&nbsp;资产申购</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/aBadList"><i class="fa fa-magic"></i>&nbsp;资产报废</a>
+                        </li>
+                    </ul>
+                    <a href="#" data-toggle="collapse" sec:authorize="hasRole('adminplus')" data-target="#Adminplus"><i class="fa fa-id-card-alt "></i>&nbsp系统管理员</a>
+                    <ul id="Adminplus" class="collapse in" sec:authorize="hasRole('adminplus')">
+                        <li class=" m-padding-mini"><a class="m-font-color" href="/roleList"><i class="fa fa-hotel"></i>&nbsp; 角色管理</a>
+                        </li>
+                        <li class="m-padding-mini"><a class="m-font-color" href="/sysList"><i class="fa fa-magic"></i>&nbsp;访问日志</a>
+                        </li>
+                    </ul>
+                </li>
+<!--                            <li role="presentation"><a href="#">资产管理</a></li>-->
+
+            </ul>
+        </div>
+
+
+
+
+        <!--中间内容部分-->
+        <div class="col-md-10" id="marginOne">
+            <div class="row">
+                <!--菜单路径-->
+                <div class="breadcrumb col-md-12">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Library</a></li>
+                    <li class="active">Data</li>
+                </div>
+            </div>
+            <!--当前菜单name-->
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="">
+                        <h4>资产管理</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-default" aria-label="Left Align" >
+                        <span id="btnHi" class="glyphicon glyphicon-align-left" aria-hidden="true">隐藏</span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-align-left" aria-hidden="true">新增</span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <h5 class="page-header m-np"></h5><br>
+            <!--查询功能-->
+            <div class="row" id="selectHi">
+                <div class="col-md-12">
+                    <form class="row" action="/atySearch" method="post">
+                        <div class="col-md-8">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label >编码：</label>
+                                    <input type="text" class="form-control" name="typeCode" value=""  placeholder="填写编码" style="width: 100px">
+                                </div>
+                                <div class="form-group">
+                                    <label >名称：</label>
+                                    <input type="text" class="form-control" name="typeName"  placeholder="填写名称" style="width: 100px">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">状态：</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="填写状态" style="width: 100px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <button type="submit" class="col-md-2 btn m-block">查询</button>
+                                <button type="reset" class="col-md-2 btn m-block m-mar-left">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+<!--            <table  class="table table-bordered" >-->
+<!--                <caption></caption>-->
+<!--                <tr>-->
+<!--                    <th></th>-->
+<!--                    <th>编码</th>-->
+<!--                    <th>名称</th>-->
+<!--                    <th>状态</th>-->
+<!--                    <th>操作</th>-->
+<!--                </tr>-->
+<!--                <tr th:each="aTypeList : ${pageInfo.list}" th:fragment=="blogList">-->
+<!--                    <th th:text="${aTypeList.id}">1</th>-->
+<!--                    <td th:text="${aTypeList.typeCode}">Bangalore</td>-->
+<!--                    <th th:text="${aTypeList.typeName}">名称11</th>-->
+<!--                    <th>-->
+<!--                        <span th:text="${aTypeList.typeStatus} == '0' ? '停用':''"   th:style=" 'color:red' ">111</span>-->
+<!--                        <span th:text="${aTypeList.typeStatus} == '1' ? '正常':''"  >111</span>-->
+<!--                    </th>-->
+<!--                    <th>-->
+<!--                        <a><i class="fas fa-edit"></i></a>&nbsp;-->
+<!--                        <a><i th:unless=" ${aTypeList.typeStatus} == 1" class="fas fa-check-circle"></i></a>-->
+<!--                        <a><i th:unless=" ${aTypeList.typeStatus} == 0" class="glyphicon glyphicon-ban-circle m-color-red"></i></a>-->
+<!--                    </th>-->
+<!--                </tr>-->
+
+<!--            </table>-->
+
+
+
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+
+
+    var point = true;
+    // 点击 无则添加属性，有去掉属性
+    $('#menuHide').click(function () {
+        if(point){
+            //隐藏菜单
+            $('#menu').hide(500);
+            $('#marginOne').toggleClass('m-marginOne');
+            $('#TrMini').css("width","60px");
+            $('#TrMini').css("transition","1s");
+            point = false;
+        }else{
+            $('#menu').show(1000);
+            $('#marginOne').toggleClass('m-marginOne');
+            $('#TrMini').css("width","240px");
+            $('#TrMini').css("transition","1s");
+            point = true;
+        }
+    });
+
+    document.getElementById("TrDouble").onclick = function () {
+        if(point){
+            //隐藏菜单
+            $('#menu').hide(600);
+            $('#marginOne').toggleClass('m-marginOne');
+            $('#TrMini').css("width","60px");
+            $('#TrMini').css("transition","1s");
+            console.log("隐藏了查询")
+            point = false;
+        }else{
+            $('#menu').show(1000);
+            $('#marginOne').toggleClass('m-marginOne');
+            $('#TrMini').css("width","240px");
+            $('#TrMini').css("transition","1s");
+            point = true;
+        }
+    };
+
+    var btnPoint = true;
+    $('#btnHi').click(function () {
+        if(btnPoint){
+            $('#selectHi').hide(600);
+            $('#btnHi').text("查询");
+            btnPoint = false;
+        }else{
+            $('#selectHi').show(600);
+            $('#btnHi').text("隐藏");
+            btnPoint = true;
+        }
+    });
+
+
+
+
+
+</script>
+</body>
+</html>

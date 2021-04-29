@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.DepartmentDao">
+
+
+    <select id="findAll" resultType="cn.lczze.ams.entity.Department">
+        select * from department
+    </select>
+
+    <!--    查出正常状态的部门-->
+    <select id="findAllOfStatus" resultType="cn.lczze.ams.entity.Department">
+        select * from department where departmentStatus = 1;
+    </select>
+
+    <!--迷糊查询带状态-->
+    <select id="searchList" parameterType="cn.lczze.ams.entity.Department"  resultType="cn.lczze.ams.entity.Department">
+        <bind name="pattern" value="'%' + departmentName + '%'" />
+        <bind name="ptn" value="'%' + departmentCode + '%'" />
+        <bind name="status" value="'%' + departmentStatus + '%'" />
+        select * from amsdb.department b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="departmentCode != null">
+                and b.departmentCode like #{ptn}
+            </if>
+            <if test="departmentName != null">
+                and b.departmentName like #{pattern}
+            </if>
+            <if test="departmentStatus != null">
+                and b.departmentStatus like #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--模糊 查出全部状态-->
+    <select id="searchNoSta" parameterType="cn.lczze.ams.entity.Department"  resultType="cn.lczze.ams.entity.Department">
+        <bind name="pattern" value="'%' + departmentName + '%'" />
+        <bind name="ptn" value="'%' + departmentCode + '%'" />
+        select * from amsdb.department b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="departmentCode != null">
+                and b.departmentCode like #{ptn}
+            </if>
+            <if test="departmentName != null">
+                and b.departmentName like #{pattern}
+            </if>
+        </where>
+    </select>
+
+    <!--添加类别-->
+    <insert id="creatDepartment">
+        insert into department(departmentCode,departmentName) values (#{departmentCode},#{departmentName});
+    </insert>
+
+    <select id="findById" resultType="cn.lczze.ams.entity.Department">
+        select * from department where id = #{id};
+    </select>
+
+
+
+    <update id="updateDepartmentById">
+        update department set departmentName = #{departmentName}, departmentCode = #{departmentCode} where id = #{id};
+    </update>
+
+    <update id="changeStu">
+        update department set departmentStatus = #{Stu}  where id = #{id}
+    </update>
+</mapper>

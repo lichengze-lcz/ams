@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:replace="common/common :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!--导航条-->
+<nav th:replace="common/common :: nav" class="navbar" style="margin-bottom: 0px ;border: none;" >
+</nav>
+
+<!--body内容-->
+<div class="container-fluid" style="padding-left: 0px ; height: 92.9%;">
+    <div class="row" style="height: 100%">
+        <!--左侧栏-->
+        <div th:replace="common/common :: #TrMini">
+        </div>
+
+        <!--中间内容部分-->
+        <div class="col-md-10 m-ph-left" id="marginOne">
+            <div class="row">
+                <!--菜单路径-->
+                <div class="breadcrumb col-md-12">
+                    <li><a href="#">  </a></li>
+                    <li><a href="#"> </a></li>
+                    <li class="active"> </li>
+                </div>
+            </div>
+            <!--当前菜单name-->
+            <div class="row">
+                <div class="col-md-1" style="width:290px">
+                    <div class="zhongxin" style="">角色列表</div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-10"></div>
+                <div class="col-lg-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="搜索" >
+                        <!--<div ><img src="" alt=""></div>-->
+                        <a><span class="glyphicon glyphicon-search" aria-hidden="true" id="sousuo"></span></a>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div>
+            <div >
+                <table class="table table-bordered"  style=" text-align: center;">
+                    <tr>
+
+                        <td>ID</td>
+                        <td>用户名</td>
+                        <td>角色名称</td>
+                        <td>角色描述</td>
+                        <td >操作</td>
+
+                    </tr>
+                    <tr th:each="roleList : ${pageInfo.list}">
+                        <td th:text="${roleList.id}">1</td>
+                        <td th:text="${roleList.username}">1</td>
+                        <td th:text="${roleList.roleList.roleName}">ADMIN</td>
+                        <td th:text="${roleList.roleList.roleDesc}">系统管理员</td>
+                        <td>
+                            <button ><a href="#" th:href="@{/chRole/{id}(id=${roleList.id})}"> 更换角色</a></button>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="static/js/me.js" th:src="@{/js/me.js}"></script>
+<script>
+    function page(obj) {
+        //拿到page值
+        $("[name='pagenum']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    //点击事件
+    $("#btnAjax").click(function () {
+        loaddata();
+    });
+    // Ajax 提交表单
+    function loaddata() {
+        $("#table-container").load("/aTypeS", {
+            typeCode: $("[name='typeCode']").val(),
+            typeName: $("[name='typeName']").val(),
+            pageNum: $("[name='pagenum']").val(),
+            typeStatus: $("[name='typeStatus']").val(),
+        });
+    }
+
+
+    //点击事件
+    $("#m-typeList").click(function () {
+        loadCommon();
+    });
+    // Ajax 提交表单
+    function loadCommon() {
+        $("#common").load("/TypeList", {
+
+        });
+    }
+
+    //图片点击切换
+    $('#nan').click(function() {
+        console.log("111111")
+        $('#a').attr('src', 'static/img/yuan.png')
+
+    })
+    $('#nv').click(function() {
+        console.log("11111333333331")
+        $('#a').attr('src', 'static/img/yuan2.png')
+
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.LeaveAddressDao">
+
+
+
+    <select id="findAll" resultType="cn.lczze.ams.entity.LeaveAddress">
+        select * from leaveaddress
+    </select>
+
+    <select id="findAllOfStatus" resultType="cn.lczze.ams.entity.LeaveAddress">
+        select * from leaveaddress where leaveStatus = 1
+    </select>
+
+    <!--迷糊查询带状态-->
+    <select id="searchList" parameterType="cn.lczze.ams.entity.LeaveAddress"  resultType="cn.lczze.ams.entity.LeaveAddress">
+        <bind name="pattern" value="'%' + leaveName + '%'" />
+        <bind name="ptn" value="'%' + leaveType + '%'" />
+        <bind name="Explain" value="'%' + leaveExplain + '%'" />
+        <bind name="status" value="'%' + leaveStatus + '%'" />
+        select * from amsdb.leaveaddress b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="leaveName != null">
+                and b.leaveName like #{pattern}
+            </if>
+            <if test="leaveType != null">
+                and b.leaveType like #{ptn}
+            </if>
+            <if test="leaveExplain != null">
+                and b.leaveExplain like #{Explain}
+            </if>
+            <if test="leaveStatus != null">
+                and b.leaveStatus like #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--模糊 查出全部状态-->
+    <select id="searchNoSta" parameterType="cn.lczze.ams.entity.LeaveAddress"  resultType="cn.lczze.ams.entity.LeaveAddress">
+        <bind name="pattern" value="'%' + leaveName + '%'" />
+        <bind name="ptn" value="'%' + leaveType + '%'" />
+        <bind name="Explain" value="'%' + leaveExplain + '%'" />
+        select * from amsdb.leaveaddress b
+        <where>
+            <if test="true">
+                1 = 1
+            </if>
+            <if test="leaveName != null">
+                and b.leaveName like #{pattern}
+            </if>
+            <if test="leaveType != null">
+                and b.leaveType like #{ptn}
+            </if>
+            <if test="leaveExplain != null">
+                and b.leaveExplain like #{Explain}
+            </if>
+        </where>
+    </select>
+
+    <!--添加类别-->
+    <insert id="creatLeaveAddress">
+        insert into leaveaddress(leaveName,leaveType,leaveExplain) values (#{leaveName},#{leaveType},#{leaveExplain});
+    </insert>
+
+    <select id="findById" resultType="cn.lczze.ams.entity.LeaveAddress">
+        select * from leaveaddress where id = #{id};
+    </select>
+
+    <update id="updateLeaveAddressById">
+        update leaveaddress set leaveName = #{leaveName}, leaveType = #{leaveType} , leaveExplain = #{leaveExplain} where id = #{id};
+    </update>
+
+    <update id="changeStu">
+        update leaveaddress set leaveStatus = #{Stu}  where id = #{id}
+    </update>
+</mapper>

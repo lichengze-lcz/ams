@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lczze.ams.dao.AmsBadDao">
+
+
+
+    <select id="findAll" resultType="cn.lczze.ams.entity.AmsBad">
+        select * from amsbad order by id desc
+    </select>
+
+    <select id="findAllByS" resultType="cn.lczze.ams.entity.AmsBad">
+         select *
+         from amsbad a
+         where
+              a.amsCode like concat("%",#{amsCode},"%") and a.amsName like concat("%",#{amsName},"%")
+         and  a.badWay like concat("%",#{badWay},"%" ) and  a.badReason like concat("%",#{badReason},"%" ) order by id desc
+
+    </select>
+
+    <insert id="CreateAmsBad">
+        insert into amsbad (amsCode,amsName,badWay,badDate,badReason) values (#{amsCode},#{amsName},#{badWay},#{badDate},#{badReason})
+    </insert>
+
+
+    <delete id="deleteBad">
+        delete from amsbad where id = #{id}
+    </delete>
+
+    <update id="chengeStatusById">
+         update amsbad set badStatus = #{status} where id = #{id}
+    </update>
+
+    <select id="findRoleById" resultType="cn.lczze.ams.entity.Role" parameterType="int">
+        select * from role where id = #{id};
+    </select>
+
+    <select id="findNameById" resultType="cn.lczze.ams.entity.AmsBad">
+        select * from amsbad where  id  = #{id};
+    </select>
+</mapper>
